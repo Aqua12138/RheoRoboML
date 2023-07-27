@@ -9,7 +9,7 @@ import ot
 import pandas as pd
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-
+task = "shape"
 # 对于不同任务需要修改求解范围 self.workArea
 # 需要提供目标表征self.get_targetPositions(), unity get
 # 如果需要更加精细的处理，请修改pixel_size
@@ -17,15 +17,34 @@ from mpl_toolkits.mplot3d import Axes3D
 class ParticlePositionChannel(SideChannel):
     def __init__(self):
         super().__init__(uuid.UUID("79eeb5a6-6650-4bc1-9a80-1289b9a224f7"))
-        self.targetDistribution = self.get_targetPositions("shape")
-        # pour [[-2.0, 2.0], [0.0, 2.0], [-2.0, 2.0]]、
+        self.targetDistribution = self.get_targetPositions(task)
+        if task == "shape":
+            self.workArea = [[-0.6, 0.6], [0.4, 0.7], [-0.6, 0.6]]
+            self.pixel_size = [12, 3, 12]
+        
+        elif task == "gather":
+            self.workArea = [[-1.2, 1.2], [0.4, 0.7], [-1.2, 1.2]]
+            self.pixel_size = [24, 3, 24]
+        
+        elif task == "pour":
+            self.workArea = [[-2.0, 2.0], [0.0, 2.0], [-2.0, 2.0]]
+            self.pixel_size = [20, 10, 20]
+        
+        elif task == "dig":
+            self.workArea = [[-1.2, 1.2], [0.4, 0.7], [-1.2, 1.2]]
+            self.pixel_size = [24, 3, 24]
+
+        else:
+            ...
+
+        # pour [[-2.0, 2.0], [0.0, 2.0], [-2.0, 2.0]]
         # shape  [[-0.6, 0.6], [0.4, 0.7], [-0.6, 0.6]]
         # gather [[-1.2, 1.2], [0.4, 0.7], [-1.2, 1.2]]
-        self.workArea = [[-0.6, 0.6], [0.4, 0.7], [-0.6, 0.6]]
+
         # pour [20, 10, 20]
         # shape  [12, 3, 12]
         # gather [24, 3, 24]
-        self.pixel_size = [12, 3, 12]
+
         self.M = self.create_cost_matrix(self.workArea) # 求解最优传输矩阵
 
 

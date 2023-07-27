@@ -1,6 +1,6 @@
 # # Unity ML-Agents Toolkit
 import sys
-sys.path.insert(0,'/home/zhx/anaconda3/envs/mlagents/lib/python3.8/site-packages')
+sys.path.insert(0,'/root/anaconda3/envs/mlagents/lib/python3.8/site-packages')
 import torch  # noqa I201
 from mlagents import torch_utils
 import yaml
